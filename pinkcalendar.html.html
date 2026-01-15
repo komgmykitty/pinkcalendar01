@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Minimal Pink Calendar</title>
+<style>
+  body {
+    margin: 0;
+    padding: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Helvetica, Arial, sans-serif;
+    background: transparent;
+  }
+
+  .calendar {
+    width: 200px; 
+    background: #ffffff;
+    border: 1px solid #f2c6d4;
+    border-radius: 6px; 
+    padding: 12px;
+    box-sizing: border-box;
+    color: #333;
+  }
+
+  .month {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #e85a8a; 
+  }
+
+  .weekdays,
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+  }
+
+  .weekdays div {
+    font-size: 11px;
+    color: #aaa;
+    margin-bottom: 4px;
+  }
+
+  .days div {
+    font-size: 12px;
+    padding: 4px 0;
+    border-radius: 4px;
+  }
+
+  .today {
+    background: #ffe3ec;
+    color: #e85a8a;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="calendar">
+  <div class="month" id="month"></div>
+
+  <div class="weekdays">
+    <div>S</div><div>M</div><div>T</div><div>W</div>
+    <div>T</div><div>F</div><div>S</div>
+  </div>
+
+  <div class="days" id="days"></div>
+</div>
+
+<script>
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const today = now.getDate();
+
+  const monthNames = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+
+  document.getElementById("month").textContent =
+    `${monthNames[month]} ${year}`;
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
+
+  const daysContainer = document.getElementById("days");
+
+  for (let i = 0; i < firstDay; i++) {
+    daysContainer.appendChild(document.createElement("div"));
+  }
+
+  for (let d = 1; d <= lastDate; d++) {
+    const day = document.createElement("div");
+    day.textContent = d;
+    if (d === today) day.classList.add("today");
+    daysContainer.appendChild(day);
+  }
+</script>
+
+</body>
+</html>
